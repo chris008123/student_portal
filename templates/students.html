@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}All Students{% endblock %}
+
+{% block content %}
+
+<!-- ====================================================
+     STUDENTS INDEX PAGE
+     ==================================================== -->
+<section class="students-page" aria-labelledby="students-title">
+  <div class="container">
+
+    <!-- Page header -->
+    <header class="page-header fade-up">
+      <div>
+        <h1 id="students-title">
+          Student Directory
+          <span class="count-badge" aria-label="{{ students|length }} students">
+            {{ students|length }}
+          </span>
+        </h1>
+        <p>All registered students in the portal database.</p>
+      </div>
+
+      <a href="{{ url_for('form') }}" class="btn btn-gold btn-sm">
+        + &nbsp;Add New Student
+      </a>
+    </header>
+
+    <!-- Table card -->
+    <div class="table-card fade-up fade-up-delay-1">
+
+      {% if students %}
+
+        <div class="table-responsive">
+          <table aria-label="Student directory table">
+
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Student</th>
+                <th scope="col">Email</th>
+                <th scope="col">Programme</th>
+                <th scope="col">Level</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for student in students %}
+              <tr>
+
+                <!-- Serial number -->
+                <td class="td-sn">{{ loop.index }}</td>
+
+                <!-- Name with avatar initials -->
+                <td>
+                  <div class="student-name-cell">
+                    <div class="table-avatar-placeholder" aria-hidden="true">
+                      {{ student.first_name[0] | upper }}
+                    </div>
+                    <div>
+                      <strong>{{ student.first_name }} {{ student.last_name }}</strong>
+                    </div>
+                  </div>
+                </td>
+
+                <!-- Email -->
+                <td>{{ student.email }}</td>
+
+                <!-- Programme -->
+                <td>{{ student.programme }}</td>
+
+                <!-- Level -->
+                <td>Level {{ student.level }}</td>
+
+                <!-- Admission status badge -->
+                <td>
+                  <span class="badge badge-{{ student.admission_status | lower }}"
+                        aria-label="Admission status: {{ student.admission_status }}">
+                    {{ student.admission_status }}
+                  </span>
+                </td>
+
+                <!-- View button -->
+                <td>
+                  <a
+                    href="{{ url_for('student_detail', student_id=student.id) }}"
+                    class="btn btn-outline btn-sm"
+                    aria-label="View details for {{ student.first_name }} {{ student.last_name }}"
+                  >
+                    View →
+                  </a>
+                </td>
+
+              </tr>
+              {% endfor %}
+            </tbody>
+
+          </table>
+        </div><!-- /table-responsive -->
+
+      {% else %}
+
+        <!-- Empty state -->
+        <div class="empty-state">
+          <div class="empty-state-icon" aria-hidden="true">🎓</div>
+          <h3>No students registered yet</h3>
+          <p>Be the first to submit a registration.</p>
+          <br />
+          <a href="{{ url_for('form') }}" class="btn btn-primary">
+            Register a Student
+          </a>
+        </div>
+
+      {% endif %}
+
+    </div><!-- /table-card -->
+
+  </div><!-- /container -->
+</section>
+
+{% endblock %}

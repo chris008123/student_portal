@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% block title %}Student Portal{% endblock %} – UniPortal</title>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+
+  {% block extra_head %}{% endblock %}
+</head>
+
+<body {% block body_attrs %}{% endblock %}>
+
+  <!-- ── NAVBAR ── -->
+  <nav class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="container">
+
+      <!-- Logo / Home link -->
+      <a href="{{ url_for('index') }}" class="nav-logo" aria-label="UniPortal Home">
+        <div class="logo-icon" aria-hidden="true">U</div>
+        <span class="logo-text">Uni<span>Portal</span></span>
+      </a>
+
+      <!-- Navigation links -->
+      <ul class="nav-links" role="list">
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('form') }}">Apply</a></li>
+        <li><a href="{{ url_for('students') }}">Students</a></li>
+        <li>
+          <a href="{{ url_for('form') }}" class="nav-cta">Register Now</a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+  <!-- ── FLASH MESSAGES ── -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container" role="alert" aria-live="polite">
+        {% for category, message in messages %}
+          <div class="flash {{ category }}">
+            <span>
+              {% if category == 'error' %}⚠&#xFE0F;
+              {% elif category == 'success' %}✅
+              {% else %}ℹ&#xFE0F;
+              {% endif %}
+            </span>
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- ── PAGE CONTENT ── -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer" role="contentinfo">
+    <p>&copy; {{ 2026 }} <span>UniPortal</span>. All rights reserved. Built with Flask &amp; Python.</p>
+  </footer>
+
+  <!-- Main JavaScript -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block extra_scripts %}{% endblock %}
+
+</body>
+</html>

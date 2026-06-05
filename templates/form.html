@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block title %}Student Registration Form{% endblock %}
+
+{% block content %}
+
+<!-- ====================================================
+     PORTAL FORM PAGE
+     ==================================================== -->
+<section class="form-page" aria-labelledby="form-page-title">
+  <div class="container">
+
+    <!-- Page heading -->
+    <header class="form-page-header fade-up">
+      <h1 id="form-page-title">Student Registration</h1>
+      <p>Fill in your personal and academic details below. All fields are required.</p>
+    </header>
+
+    <!-- ── FORM CARD ── -->
+    <div class="form-card fade-up fade-up-delay-1">
+
+      <form
+        id="portal-form"
+        method="POST"
+        action="{{ url_for('submit') }}"
+        enctype="multipart/form-data"
+        novalidate
+        aria-label="Student registration form"
+      >
+
+        <!-- ══════════════════════════════════════
+             SECTION 1 – Personal Information
+             ══════════════════════════════════════ -->
+        <div class="section-divider">
+          <h3>👤 Personal Information</h3>
+        </div>
+
+        <div class="form-grid">
+
+          <!-- First Name -->
+          <div class="form-group">
+            <label for="first_name">
+              First Name <span class="required" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="first_name"
+              name="first_name"
+              class="form-control"
+              placeholder="e.g. Ama"
+              required
+              autocomplete="given-name"
+            />
+            <span class="error-msg" role="alert"></span>
+          </div>
+
+          <!-- Last Name -->
+          <div class="form-group">
+            <label for="last_name">
+              Last Name <span class="required" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="text"
+              id="last_name"
+              name="last_name"
+              class="form-control"
+              placeholder="e.g. Osei-Bonsu"
+              required
+              autocomplete="family-name"
+            />
+            <span class="error-msg" role="alert"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email">
+              Email Address <span class="required" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              placeholder="e.g. ama@university.edu.gh"
+              required
+              autocomplete="email"
+            />
+            <span class="error-msg" role="alert"></span>
+          </div>
+
+          <!-- Phone -->
+          <div class="form-group">
+            <label for="phone">
+              Phone Number <span class="required" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              class="form-control"
+              placeholder="e.g. +233 24 000 0000"
+              required
+              autocomplete="tel"
+            />
+            <span class="error-msg" role="alert"></span>
+          </div>
+
+          <!-- Date of Birth -->
+          <div class="form-group">
+            <label for="date_of_birth">
+              Date of Birth <span class="required" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="date"
+              id="date_of_birth"
+              name="date_of_birth"
+              class="form-control"
+              required
+            />
+            <span class="error-msg" role="alert"></span>
+          </div>
+
+          <!-- Gender (Radio Buttons) -->
+          <div class="form-group">
+            <label>Gender <span class="required" aria-hidden="true">*</span></label>
+            <div class="radio-group" role="radiogroup" aria-label="Select gender">
+              <label class="radio-option">
+                <input type="radio" name="gender" value="Male" required />
+                Male
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="gender" value="Female" />
+                Female
+              </label>
+            </div>
+            <!-- Gender-specific error message hook -->
+            <span class="error-msg gender-error" role="alert"></span>
+          </div>
+
+        </div><!-- /form-grid (personal) -->
+
+        <!-- Address (full width) -->
+        <div class="form-grid full" style="margin-bottom:1.5rem;">
+          <div class="form-group">
+            <label for="address">
+              Home Address <span class="required" aria-hidden="true">*</span>
+            </label>
+            <textarea
+              id="address"
+              name="address"
+              class="form-control"
+              placeholder="Street / Area / City"
+              rows="3"
+              required
+            ></textarea>
+            <span class="error-msg" role="alert"></span>
+          </div>
+        </div>
+
+        <!-- Country (dynamic select) -->
+        <div class="form-grid" style="margin-bottom:1.5rem;">
+          <div class="form-group">
+            <label for="country">
+              Country <span class="required" aria-hidden="true">*</span>
+            </label>
+            <!-- Populated dynamically via fetchJSON('/api/countries') in main.js -->
+            <select id="country" name="country" class="form-control" required>
+              <option value="" disabled selected>Loading countries…</option>
+            </select>
+            <span class="error-msg" role="alert"></span>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             SECTION 2 – Academic Information
+             ══════════════════════════════════════ -->
+        <div class="section-divider">
+          <h3>🎓 Academic Information</h3>
+        </div>
+
+        <div class="form-grid three-col">
+
+          <!-- Programme (dynamic) -->
+          <div class="form-group">
+            <label for="programme">
+              Programme <span class="required" aria-hidden="true">*</span>
+            </label>
+            <select id="programme" name="programme" class="form-control" required>
+              <option value="" disabled selected>Loading programmes…</option>
+            </select>
+            <span class="error-msg" role="alert"></span>
+          </div>
+
+          <!-- Level (dynamic) -->
+          <div class="form-group">
+            <label for="level">
+              Level / Year <span class="required" aria-hidden="true">*</span>
+            </label>
+            <select id="level" name="level" class="form-control" required>
+              <option value="" disabled selected>Loading levels…</option>
+            </select>
+            <span class="error-msg" role="alert"></span>
+          </div>
+
+          <!-- Year of Entry (dynamic) -->
+          <div class="form-group">
+            <label for="year_of_entry">
+              Year of Entry <span class="required" aria-hidden="true">*</span>
+            </label>
+            <select id="year_of_entry" name="year_of_entry" class="form-control" required>
+              <option value="" disabled selected>Loading years…</option>
+            </select>
+            <span class="error-msg" role="alert"></span>
+          </div>
+
+        </div><!-- /form-grid (academic) -->
+
+        <!-- GPA (number input) -->
+        <div class="form-grid" style="margin-bottom:1.5rem;">
+          <div class="form-group">
+            <label for="gpa">
+              Current GPA (0.0 – 4.0) <span class="required" aria-hidden="true">*</span>
+            </label>
+            <input
+              type="number"
+              id="gpa"
+              name="gpa"
+              class="form-control"
+              min="0" max="4.0" step="0.01"
+              placeholder="e.g. 3.50"
+              required
+            />
+            <span class="error-msg" role="alert"></span>
+          </div>
+        </div>
+
+        <!-- ══════════════════════════════════════
+             SECTION 3 – Profile Photo
+             ══════════════════════════════════════ -->
+        <div class="section-divider">
+          <h3>📷 Profile Photo</h3>
+        </div>
+
+        <div class="form-grid full" style="margin-bottom:2rem;">
+          <div class="form-group">
+            <label>Upload Photo <span class="required" aria-hidden="true">*</span></label>
+            <div class="file-upload-wrapper">
+              <!-- Hidden file input; the styled label triggers it -->
+              <input
+                type="file"
+                id="photo"
+                name="photo"
+                accept="image/png,image/jpeg,image/gif,image/webp"
+              />
+              <label for="photo" class="file-upload-label" role="button" tabindex="0">
+                <span class="file-upload-icon">🖼️</span>
+                <span class="file-upload-text">
+                  <strong>Click to choose a photo</strong>
+                  PNG, JPG, GIF or WebP · Max 5 MB
+                </span>
+              </label>
+              <p class="file-name-display" aria-live="polite"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Submit Row ── -->
+        <div class="form-submit-row">
+          <a href="{{ url_for('index') }}" class="btn btn-outline">Cancel</a>
+          <button type="submit" class="btn btn-primary">
+            Submit Registration →
+          </button>
+        </div>
+
+      </form><!-- /portal-form -->
+    </div><!-- /form-card -->
+
+  </div><!-- /container -->
+</section>
+
+{% endblock %}

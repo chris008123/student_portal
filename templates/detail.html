@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+
+{% block title %}{{ student.first_name }} {{ student.last_name }}{% endblock %}
+
+{# Pass student ID to JS via data attribute on body #}
+{% block body_attrs %}data-student-id="{{ student.id }}"{% endblock %}
+
+{% block content %}
+
+<!-- ====================================================
+     STUDENT DETAIL PAGE
+     ==================================================== -->
+<section class="detail-page" aria-labelledby="student-name-heading">
+  <div class="container">
+
+    <!-- Back navigation link -->
+    <a href="{{ url_for('students') }}" class="back-link fade-up" aria-label="Back to student directory">
+      ← Back to Directory
+    </a>
+
+    <!-- Two-column layout: sidebar + main info -->
+    <div class="detail-grid">
+
+      <!-- ── LEFT: Profile Sidebar Card ── -->
+      <aside aria-label="Student profile summary">
+        <div class="profile-card fade-up">
+
+          <!-- Header with photo + name -->
+          <div class="profile-card-header">
+
+            {% set photo_path = 'images/uploads/' ~ student.photo %}
+            {# Try to display the uploaded photo, fallback to initials avatar #}
+            <img
+              src="{{ url_for('static', filename=photo_path) }}"
+              alt="Photo of {{ student.first_name }} {{ student.last_name }}"
+              class="profile-photo"
+              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+            />
+            <div class="profile-photo-placeholder" style="display:none;" aria-hidden="true">
+              {{ student.first_name[0] | upper }}
+            </div>
+
+            <h2 class="profile-name" id="student-name-heading">
+              {{ student.first_name }} {{ student.last_name }}
+            </h2>
+            <p class="profile-sub">{{ student.programme }}</p>
+          </div>
+
+          <!-- Quick meta list -->
+          <div class="profile-card-body">
+            <dl class="profile-meta">
+
+              <div class="meta-item">
+                <span class="meta-icon" aria-hidden="true">📧</span>
+                <div>
+                  <dt class="meta-label">Email</dt>
+                  <dd class="meta-value">{{ student.email }}</dd>
+                </div>
+              </div>
+
+              <div class="meta-item">
+                <span class="meta-icon" aria-hidden="true">📞</span>
+                <div>
+                  <dt class="meta-label">Phone</dt>
+                  <dd class="meta-value">{{ student.phone }}</dd>
+                </div>
+              </div>
+
+              <div class="meta-item">
+                <span class="meta-icon" aria-hidden="true">🌍</span>
+                <div>
+                  <dt class="meta-label">Country</dt>
+                  <dd class="meta-value">{{ student.country }}</dd>
+                </div>
+              </div>
+
+              <div class="meta-item">
+                <span class="meta-icon" aria-hidden="true">🎓</span>
+                <div>
+                  <dt class="meta-label">Level</dt>
+                  <dd class="meta-value">Level {{ student.level }}</dd>
+                </div>
+              </div>
+
+              <div class="meta-item">
+                <span class="meta-icon" aria-hidden="true">📊</span>
+                <div>
+                  <dt class="meta-label">Admission Status</dt>
+                  <dd>
+                    <span
+                      id="current-status-badge"
+                      class="badge badge-{{ student.admission_status | lower }}"
+                    >
+                      {{ student.admission_status }}
+                    </span>
+                  </dd>
+                </div>
+              </div>
+
+            </dl>
+          </div><!-- /profile-card-body -->
+
+        </div><!-- /profile-card -->
+      </aside>
+
+      <!-- ── RIGHT: Detailed Info Card ── -->
+      <div>
+        <div class="detail-card fade-up fade-up-delay-1">
+
+          <!-- Personal Details Section -->
+          <section class="detail-section" aria-labelledby="personal-section-title">
+            <h3 class="detail-section-title" id="personal-section-title">
+              👤 Personal Details
+            </h3>
+
+            <dl class="info-grid">
+
+              <div class="info-item">
+                <dt class="info-label">Full Name</dt>
+                <dd class="info-value">{{ student.first_name }} {{ student.last_name }}</dd>
+              </div>
+
+              <div class="info-item">
+                <dt class="info-label">Date of Birth</dt>
+                <dd class="info-value">{{ student.date_of_birth }}</dd>
+              </div>
+
+              <div class="info-item">
+                <dt class="info-label">Gender</dt>
+                <dd class="info-value">{{ student.gender }}</dd>
+              </div>
+
+              <div class="info-item">
+                <dt class="info-label">Email Address</dt>
+                <dd class="info-value">
+                  <a href="mailto:{{ student.email }}" style="color:var(--navy);">
+                    {{ student.email }}
+                  </a>
+                </dd>
+              </div>
+
+              <div class="info-item">
+                <dt class="info-label">Phone</dt>
+                <dd class="info-value">{{ student.phone }}</dd>
+              </div>
+
+              <div class="info-item">
+                <dt class="info-label">Country</dt>
+                <dd class="info-value">{{ student.country }}</dd>
+              </div>
+
+              <div class="info-item" style="grid-column: span 2;">
+                <dt class="info-label">Home Address</dt>
+                <dd class="info-value">{{ student.address }}</dd>
+              </div>
+
+            </dl>
+          </section>
+
+          <!-- Academic Details Section -->
+          <section class="detail-section" aria-labelledby="academic-section-title">
+            <h3 class="detail-section-title" id="academic-section-title">
+              🎓 Academic Details
+            </h3>
+
+            <dl class="info-grid">
+
+              <div class="info-item">
+                <dt class="info-label">Programme</dt>
+                <dd class="info-value">{{ student.programme }}</dd>
+              </div>
+
+              <div class="info-item">
+                <dt class="info-label">Level</dt>
+                <dd class="info-value">Level {{ student.level }}</dd>
+              </div>
+
+              <div class="info-item">
+                <dt class="info-label">Year of Entry</dt>
+                <dd class="info-value">{{ student.year_of_entry }}</dd>
+              </div>
+
+              <div class="info-item">
+                <dt class="info-label">GPA</dt>
+                <dd class="info-value">{{ "%.2f"|format(student.gpa) }} / 4.00</dd>
+              </div>
+
+              <div class="info-item">
+                <dt class="info-label">Registered</dt>
+                <dd class="info-value">
+                  {% if student.created_at %}
+                    {{ student.created_at.strftime('%Y-%m-%d') if student.created_at else 'N/A' }}
+                  {% else %}
+                    —
+                  {% endif %}
+                </dd>
+              </div>
+
+            </dl>
+          </section>
+
+          <!-- Admission Status Update Section (async) -->
+          <section class="detail-section" aria-labelledby="status-section-title">
+            <h3 class="detail-section-title" id="status-section-title">
+              ⚙️ Update Admission Status
+            </h3>
+
+            <p style="font-size:0.9rem;color:var(--text-mid);margin-bottom:1rem;">
+              Change the admission status for this student. The update is applied
+              instantly without reloading the page.
+            </p>
+
+            <div class="status-form-card" role="form" aria-label="Admission status update form">
+              <label for="admission_status">New Status:</label>
+
+              <select
+                id="admission_status"
+                name="admission_status"
+                class="form-control status-select"
+                aria-label="Select new admission status"
+              >
+                <option value="" disabled selected>Select status…</option>
+                {% for status in ["Pending", "Admitted", "Rejected", "Deferred"] %}
+                  <option
+                    value="{{ status }}"
+                    {% if status == student.admission_status %}selected{% endif %}
+                  >
+                    {{ status }}
+                  </option>
+                {% endfor %}
+              </select>
+
+              <button
+                id="update-status-btn"
+                class="btn btn-primary btn-sm"
+                type="button"
+                aria-label="Save the new admission status"
+              >
+                Update
+              </button>
+
+              <!-- Inline async feedback message -->
+              <span id="status-feedback" class="status-feedback" role="status" aria-live="polite"></span>
+            </div>
+
+          </section><!-- /status section -->
+
+        </div><!-- /detail-card -->
+      </div><!-- /right col -->
+
+    </div><!-- /detail-grid -->
+
+  </div><!-- /container -->
+</section>
+
+{% endblock %}

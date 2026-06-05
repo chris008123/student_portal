@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+
+<!-- ====================================================
+     HERO / INTRO SECTION
+     ==================================================== -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="container">
+
+    <!-- Left: Text Content -->
+    <div class="hero-content">
+
+      <div class="hero-badge" aria-label="Portal status">🎓 Academic Year 2026 / 2027</div>
+
+      <h1 class="hero-title" id="hero-title">
+        Your Academic<br />
+        Journey Starts<br />
+        <em>Here.</em>
+      </h1>
+
+      <p class="hero-tagline">
+        UniPortal is the central hub for student registration and academic management.
+        Submit your details, track your admission status, and stay on top of your
+        university journey — all in one place.
+      </p>
+
+      <!-- Call to Action button -->
+      <a href="{{ url_for('form') }}" class="btn btn-primary" role="button">
+        ✏️ &nbsp;Register as a Student
+      </a>
+
+      <!-- Quick features -->
+      <div class="hero-features" aria-label="Key features">
+        <div class="feature-item">
+          <div class="feature-icon" aria-hidden="true">📋</div>
+          <span>Complete your academic profile in minutes</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon" aria-hidden="true">🔍</div>
+          <span>Browse and manage the student directory</span>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon" aria-hidden="true">⚡</div>
+          <span>Real-time admission status updates</span>
+        </div>
+      </div>
+
+      <!-- Stats row -->
+      <div class="hero-stats" aria-label="Portal statistics">
+        <div class="stat-item">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">Students Enrolled</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">18</div>
+          <div class="stat-label">Programmes</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">4</div>
+          <div class="stat-label">Admission Levels</div>
+        </div>
+      </div>
+
+    </div><!-- /hero-content -->
+
+    <!-- Right: Visual Card (decorative portal preview) -->
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-card">
+
+        <!-- Fake window chrome -->
+        <div class="hero-card-header">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <span class="hero-card-title">student_profile.portal</span>
+        </div>
+
+        <div class="hero-card-body">
+
+          <!-- Mock student profile preview -->
+          <div class="preview-profile">
+            <div class="preview-avatar">A</div>
+            <div class="preview-info">
+              <div class="name">Ama Osei-Bonsu</div>
+              <div class="sub">Computer Science · Level 300</div>
+            </div>
+            <div class="preview-badge">Admitted</div>
+          </div>
+
+          <!-- Mock data fields -->
+          <div class="preview-fields">
+            <div class="preview-field">
+              <span class="field-label">Programme</span>
+              <div class="field-bar">
+                <div class="field-bar-fill" style="width:85%"></div>
+              </div>
+            </div>
+            <div class="preview-field">
+              <span class="field-label">Email</span>
+              <div class="field-bar">
+                <div class="field-bar-fill" style="width:100%"></div>
+              </div>
+            </div>
+            <div class="preview-field">
+              <span class="field-label">GPA</span>
+              <div class="field-bar">
+                <div class="field-bar-fill" style="width:78%"></div>
+              </div>
+            </div>
+            <div class="preview-field">
+              <span class="field-label">Address</span>
+              <div class="field-bar">
+                <div class="field-bar-fill" style="width:92%"></div>
+              </div>
+            </div>
+            <div class="preview-field">
+              <span class="field-label">Country</span>
+              <div class="field-bar">
+                <div class="field-bar-fill" style="width:70%"></div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /hero-card-body -->
+      </div><!-- /hero-card -->
+    </div><!-- /hero-visual -->
+
+  </div><!-- /container -->
+</section>
+
+{% endblock %}
