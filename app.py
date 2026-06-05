@@ -24,6 +24,9 @@ from flask import (
 )
 from werkzeug.utils import secure_filename
 
+from dotenv import load_dotenv
+load_dotenv()  # ← make sure this line exists and is BEFORE the MYSQL_CONFIG dict
+
 # ---------------------------------------------------------------------------
 # App configuration
 # ---------------------------------------------------------------------------
